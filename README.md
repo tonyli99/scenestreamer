@@ -1,7 +1,7 @@
 # Scene Streamer
 
 # Overview
-Scene Streamer automatically loads and unloads scenes to help you manage large environments
+Plugin for Unity. Scene Streamer automatically loads and unloads scenes to help you manage large environments
 such as continuous game worlds.
 
 # Example Scene
@@ -35,15 +35,15 @@ Questions: support@pixelcrushers.com
 
 More Pixel Crushers products:
 
-Dialogue System for Unity
-AAA-Quality Dialogue & Quest System
+Dialogue System for Unity<br> 
+AAA-Quality Dialogue & Quest System<br>
 https://assetstore.unity.com/packages/tools/ai/dialogue-system-for-unity-11672
 
-Quest Machine
-Procedural & Hand-written Quests
+Quest Machine<br>
+Procedural & Hand-written Quests<br>
 https://assetstore.unity.com/packages/templates/systems/quest-machine-39834
 
-Love/Hate
-Give your characters dynamic, emotion-driven relationships
+Love/Hate<br>
+Give your characters dynamic, emotion-driven relationships<br>
 https://assetstore.unity.com/packages/tools/ai/love-hate-33063
 
