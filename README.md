@@ -2,7 +2,7 @@
 
 # Overview
 Plugin for Unity. Scene Streamer automatically loads and unloads scenes to help you manage large environments
-such as continuous game worlds.
+such as continuous game worlds. Also available on the Unity Asset Store: https://assetstore.unity.com/packages/tools/utilities/scene-streamer-38168
 
 # Example Scene
 To play the example scene:
