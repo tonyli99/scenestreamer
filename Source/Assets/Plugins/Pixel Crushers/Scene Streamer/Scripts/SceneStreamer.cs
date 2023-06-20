@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace PixelCrushers.SceneStreamer
@@ -14,9 +14,6 @@ namespace PixelCrushers.SceneStreamer
     /// automatically loads neighboring scenes up to a distance you specify and unloads 
     /// scenes beyond that distance.
     /// 
-    /// In Unity versions below 5.3, all scenes are loaded into a single containing GameObject. 
-    /// As the player moves through the world, scenes are added and removed from this container.
-    /// 
     /// You'll usually only call the static method SetCurrentScene(), and often only through 
     /// the SetStartScene script.
     /// 
@@ -25,6 +22,9 @@ namespace PixelCrushers.SceneStreamer
     /// 
     /// You can also hook into the events On Loading and On Loaded to get notification when a
     /// scene begins loading and when it's done loading.
+    /// 
+    /// Define the scripting symbol USE_SAVESYSTEM if you want it to work with the 
+    /// Pixel Crushers Save System.
     /// </summary>
     [AddComponentMenu("Scene Streamer/Scene Streamer")]
     public class SceneStreamer : MonoBehaviour
@@ -65,18 +65,18 @@ namespace PixelCrushers.SceneStreamer
         /// <summary>
         /// The names of all loaded scenes.
         /// </summary>
-        private HashSet<string> m_loaded = new HashSet<string>();
+        private List<string> m_loaded = new List<string>();
 
         /// <summary>
         /// The names of all scenes that are in the process of being loaded.
         /// </summary>
-        private HashSet<string> m_loading = new HashSet<string>();
+        private List<string> m_loading = new List<string>();
 
         /// <summary>
         /// The names of all scenes within maxNeighborDistance of the current scene.
         /// This is used when determining which neighboring scenes to load or unload.
         /// </summary>
-        private HashSet<string> m_near = new HashSet<string>();
+        private List<string> m_near = new List<string>();
 
         private static object s_lock = new object();
 
@@ -248,35 +248,36 @@ namespace PixelCrushers.SceneStreamer
         }
 
         /// <summary>
-        /// (Unity Pro) Runs Application.LoadLevelAdditiveAsync() and calls FinishLoad() when done.
+        /// Loads additive scene async and calls FinishLoad() when done.
         /// </summary>
         /// <param name="sceneName">Scene name.</param>
         /// <param name="loadedHandler">Loaded handler.</param>
         /// <param name="distance">Distance.</param>
         private IEnumerator LoadAdditiveAsync(string sceneName, InternalLoadedHandler loadedHandler, int distance)
         {
+#if USE_SAVESYSTEM
+            m_isLoading = true;
+            SaveSystem.sceneLoaded += OnSceneLoaded;
+            SaveSystem.LoadAdditiveScene(sceneName);
+            while (m_isLoading)
+            {
+                yield return null;
+            }
+#else
             AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             onLoading.Invoke(sceneName, asyncOperation);
             yield return asyncOperation;
+#endif
             FinishLoad(sceneName, loadedHandler, distance);
         }
 
-        /// <summary>
-        /// (Unity) Runs Application.LoadLevelAdditive() and calls FinishLoad() when done.
-        /// This coroutine waits two frames to wait for the load to complete.
-        /// </summary>
-        /// <returns>The additive.</returns>
-        /// <param name="sceneName">Scene name.</param>
-        /// <param name="loadedHandler">Loaded handler.</param>
-        /// <param name="distance">Distance.</param>
-        private IEnumerator LoadAdditive(string sceneName, InternalLoadedHandler loadedHandler, int distance)
+#if USE_SAVESYSTEM
+        private bool m_isLoading = false;
+        private void OnSceneLoaded(string sceneName, int sceneIndex)
         {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-            onLoading.Invoke(sceneName, null);
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            FinishLoad(sceneName, loadedHandler, distance);
+            m_isLoading = false;
         }
+#endif
 
         /// <summary>
         /// Called when a level is done loading. Updates the loaded and loading lists, and 
@@ -316,9 +317,12 @@ namespace PixelCrushers.SceneStreamer
         public void Unload(string sceneName)
         {
             if (logDebugInfo) Debug.Log("Scene Streamer: Unloading scene " + sceneName + ".");
-            Destroy(GameObject.Find(sceneName));
             m_loaded.Remove(sceneName);
+#if USE_SAVESYSTEM
+            SaveSystem.UnloadAdditiveScene(sceneName);
+#else
             SceneManager.UnloadSceneAsync(sceneName);
+#endif
         }
 
         /// <summary>
@@ -358,6 +362,50 @@ namespace PixelCrushers.SceneStreamer
             instance.Unload(sceneName);
         }
 
+        public static void UnloadAll()
+        {
+            var allScenes = new List<string>(instance.m_loaded);
+            allScenes.ForEach(sceneName => UnloadScene(sceneName));
+            instance.m_currentSceneName = string.Empty;
+            instance.m_loading.Clear();
+            instance.m_loaded.Clear();
+            instance.m_near.Clear();
+        }
+
+        public static SceneStreamerState RecordState()
+        {
+            var state = new SceneStreamerState();
+            state.current = instance.m_currentSceneName;
+            state.loaded = new List<string>(instance.m_loaded);
+            state.near = new List<string>(instance.m_near);
+            return state;
+        }
+
+        public static void ApplyState(SceneStreamerState state)
+        {
+            if (state == null) return;
+            instance.m_currentSceneName = state.current;
+            instance.m_loaded.Clear();
+#if USE_SAVESYSTEM
+            SaveSystem.addedScenes.Clear();
+            SaveSystem.addedScenes.AddRange(state.loaded);
+#endif
+            state.loaded.ForEach(sceneName =>
+            {
+                instance.m_loaded.Add(sceneName);
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            });
+            state.near.ForEach(sceneName => instance.m_near.Add(sceneName));
+        }
+
+    }
+
+    [System.Serializable]
+    public class SceneStreamerState
+    {
+        public string current;
+        public List<string> loaded;
+        public List<string> near;
     }
 
 }

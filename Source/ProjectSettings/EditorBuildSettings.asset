@@ -6,14 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 1.unity
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Start.unity
+    guid: 589dbe041e7d9264692e88ceb79a9895
   - enabled: 1
-    path: Assets/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 2.unity
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 1.unity
+    guid: 9878f3c53dac0e9448bcb1919c3157eb
   - enabled: 1
-    path: Assets/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 3.unity
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 2.unity
+    guid: 4a977d68192c8904d9c8a700ba3c26f9
   - enabled: 1
-    path: Assets/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 4.unity
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 3.unity
+    guid: 2503db24a83ffea43a7ae66020261a2b
   - enabled: 1
-    path: Assets/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 5.unity
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 4.unity
+    guid: 69cadd23fd89604428f1bfdcd1cab20f
   - enabled: 1
-    path: Assets/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 6.unity
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 5.unity
+    guid: 92d9515f29d6f684abc89e4b84b84afd
+  - enabled: 1
+    path: Assets/Plugins/Pixel Crushers/Scene Streamer/Example/Scenes/Scene 6.unity
+    guid: 3ad20b4d4d9179649bf263f5bbf4521e
+  m_configObjects: {}
