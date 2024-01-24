@@ -1,7 +1,7 @@
 /*
 ----------------------------
        Scene Streamer
-        Version 1.25
+        Version 1.26
 
  Copyright © Pixel Crushers
 ----------------------------

@@ -275,6 +275,7 @@ namespace PixelCrushers.SceneStreamer
         private bool m_isLoading = false;
         private void OnSceneLoaded(string sceneName, int sceneIndex)
         {
+            SaveSystem.sceneLoaded -= OnSceneLoaded;
             m_isLoading = false;
         }
 #endif
