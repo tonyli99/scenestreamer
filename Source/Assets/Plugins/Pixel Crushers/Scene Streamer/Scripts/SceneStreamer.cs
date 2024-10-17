@@ -90,10 +90,10 @@ namespace PixelCrushers.SceneStreamer
                 {
                     if (s_instance == null)
                     {
-                        s_instance = FindObjectOfType(typeof(SceneStreamer)) as SceneStreamer;
+                        s_instance = FindFirstObjectByType<SceneStreamer>();
                         if (s_instance == null)
                         {
-                            s_instance = new GameObject("Scene Loader", typeof(SceneStreamer)).GetComponent<SceneStreamer>();
+                            s_instance = new GameObject("Scene Loader").AddComponent<SceneStreamer>();
                         }
                     }
                     return s_instance;
@@ -105,6 +105,14 @@ namespace PixelCrushers.SceneStreamer
             }
         }
 
+        public static T FindFirstObjectByType<T>() where T : UnityEngine.Object
+        {
+#if UNITY_2023_1_OR_NEWER
+            return UnityEngine.Object.FindFirstObjectByType<T>();
+#else
+            return UnityEngine.Object.FindObjectOfType<T>();
+#endif
+        }
         public void Awake()
         {
             if (s_instance)

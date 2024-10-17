@@ -1,7 +1,7 @@
 /*
 ----------------------------
        Scene Streamer
-        Version 1.26
+       Version 1.26.1
 
  Copyright © Pixel Crushers
 ----------------------------
@@ -19,7 +19,7 @@ More Info:
 ----------
 Support: support@pixelcrushers.com
 
-Dialogue System for Unity
+Dialogue System for Unity:
 AAA-Quality Dialogue & Quest System
 https://assetstore.unity.com/packages/tools/ai/dialogue-system-for-unity-11672
 
@@ -27,7 +27,11 @@ Quest Machine:
 Procedural & Hand-written Quests
 https://assetstore.unity.com/packages/templates/systems/quest-machine-39834
 
-Love/Hate
+Love/Hate:
 Give your characters dynamic, emotion-driven relationships
 https://assetstore.unity.com/packages/tools/ai/love-hate-33063
+
+Dungeon Grid Controller:
+First-person grid-based movement controller
+https://assetstore.unity.com/packages/tools/game-toolkits/dungeon-crawler-grid-controller-235922
 */
