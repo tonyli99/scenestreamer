@@ -90,7 +90,7 @@ namespace PixelCrushers.SceneStreamer
                 {
                     if (s_instance == null)
                     {
-                        s_instance = FindFirstObjectByType<SceneStreamer>();
+                        s_instance = VersionSafeFindFirstObjectByType<SceneStreamer>();
                         if (s_instance == null)
                         {
                             s_instance = new GameObject("Scene Loader").AddComponent<SceneStreamer>();
@@ -105,7 +105,7 @@ namespace PixelCrushers.SceneStreamer
             }
         }
 
-        public static T FindFirstObjectByType<T>() where T : UnityEngine.Object
+        public static T VersionSafeFindFirstObjectByType<T>() where T : UnityEngine.Object
         {
 #if UNITY_2023_1_OR_NEWER
             return UnityEngine.Object.FindFirstObjectByType<T>();
