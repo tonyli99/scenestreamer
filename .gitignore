@@ -10,6 +10,9 @@
 /Source/[Ll]ogs/
 /Source/[Mm]emoryCaptures/
 
+/com.pixelcrushers.scenestreamer/
+/scene_streamer_urp_upm/
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/Source/[Aa]ssets/**/*.meta
 

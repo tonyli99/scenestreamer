@@ -1,7 +1,7 @@
 /*
 ----------------------------
        Scene Streamer
-       Version 1.26.1
+       Version 1.26.2
 
  Copyright © Pixel Crushers
 ----------------------------
@@ -10,9 +10,10 @@ Getting Started:
 ----------------
 o Read the manual.
 o Play the scene Assets/Scene Streamer/Example/Start.
-  (You must add Scene 1 - Scene 6 to your build settings first.)
+  - You must add Scene 1 - Scene 6 to your build settings first.
+  - Note: Demo player controller uses Input System (New).
 o Add Assets/Scene Streamer/Prefabs/Scene Streamer to your
-  startup scene and customize it.
+  startup scene and customize it. (Works with any input handling.)
 
 
 More Info:
@@ -31,7 +32,7 @@ Love/Hate:
 Give your characters dynamic, emotion-driven relationships
 https://assetstore.unity.com/packages/tools/ai/love-hate-33063
 
-Dungeon Grid Controller:
+Dungeon Crawler Grid Controller:
 First-person grid-based movement controller
 https://assetstore.unity.com/packages/tools/game-toolkits/dungeon-crawler-grid-controller-235922
 */

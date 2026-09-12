@@ -107,7 +107,9 @@ namespace PixelCrushers.SceneStreamer
 
         public static T VersionSafeFindFirstObjectByType<T>() where T : UnityEngine.Object
         {
-#if UNITY_2023_1_OR_NEWER
+#if UNITY_6000_4_OR_NEWER
+            return UnityEngine.Object.FindAnyObjectByType<T>();
+#elif UNITY_6000_0_OR_NEWER
             return UnityEngine.Object.FindFirstObjectByType<T>();
 #else
             return UnityEngine.Object.FindObjectOfType<T>();

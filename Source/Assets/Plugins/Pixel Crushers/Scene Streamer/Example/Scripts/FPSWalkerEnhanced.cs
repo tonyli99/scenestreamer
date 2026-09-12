@@ -2,10 +2,12 @@
 // Modified:
 // 1. Namespace to prevent conflicts.
 // 2. Only checks Horizontal and Vertical inputs.
+// 3. Updated to use Input System.
 
 namespace PixelCrushers.SceneStreamer.Example
 {
     using UnityEngine;
+    using UnityEngine.InputSystem;
 
     [RequireComponent(typeof(CharacterController))]
     public class FPSWalkerEnhanced : MonoBehaviour
@@ -104,8 +106,8 @@ namespace PixelCrushers.SceneStreamer.Example
 
         private void FixedUpdate()
         {
-            float inputX = Input.GetAxis("Horizontal");
-            float inputY = Input.GetAxis("Vertical");
+            float inputX = -Keyboard.current.aKey.ReadValue() + Keyboard.current.dKey.ReadValue(); // Input.GetAxis("Horizontal");
+            float inputY = -Keyboard.current.sKey.ReadValue() + Keyboard.current.wKey.ReadValue(); // Input.GetAxis("Vertical");
 
             // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
             float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && m_LimitDiagonalSpeed) ? .7071f : 1.0f;
@@ -146,7 +148,7 @@ namespace PixelCrushers.SceneStreamer.Example
                 // If running isn't on a toggle, then use the appropriate speed depending on whether the run button is down
                 if (!m_ToggleRun)
                 {
-                    m_Speed = Input.GetKey(KeyCode.LeftShift) ? m_RunSpeed : m_WalkSpeed;
+                    m_Speed = Keyboard.current.leftShiftKey.isPressed ? m_RunSpeed : m_WalkSpeed;
                 }
 
                 // If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on

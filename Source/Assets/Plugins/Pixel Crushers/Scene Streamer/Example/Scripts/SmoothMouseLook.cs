@@ -2,11 +2,12 @@
 // Modified:
 // 1. Namespace to prevent conflicts.
 // 2. Only checks Mouse X and Mouse Y inputs.
+// 3. Updated to use Input System.
 
 namespace PixelCrushers.SceneStreamer.Example
 {
     using UnityEngine;
-    using System.Collections;
+    using UnityEngine.InputSystem;
     using System.Collections.Generic;
 
     [AddComponentMenu("Camera-Control/Smooth Mouse Look")]
@@ -15,7 +16,7 @@ namespace PixelCrushers.SceneStreamer.Example
 
         public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
         public RotationAxes axes = RotationAxes.MouseXAndY;
-        public float sensitivityX = 15F;
+        public float sensitivityX = 30F;
         public float sensitivityY = 15F;
 
         public float minimumX = -360F;
@@ -40,13 +41,15 @@ namespace PixelCrushers.SceneStreamer.Example
 
         void Update()
         {
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue() * Time.deltaTime;
+
             if (axes == RotationAxes.MouseXAndY)
             {
                 rotAverageY = 0f;
                 rotAverageX = 0f;
 
-                rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-                rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+                rotationY += mouseDelta.y * sensitivityY;
+                rotationX += mouseDelta.x * sensitivityX;
 
                 rotArrayY.Add(rotationY);
                 rotArrayX.Add(rotationX);
@@ -84,7 +87,7 @@ namespace PixelCrushers.SceneStreamer.Example
             {
                 rotAverageX = 0f;
 
-                rotationX += Input.GetAxis("Mouse X") * sensitivityX;
+                rotationX += mouseDelta.x * sensitivityX;
 
                 rotArrayX.Add(rotationX);
 
@@ -107,7 +110,7 @@ namespace PixelCrushers.SceneStreamer.Example
             {
                 rotAverageY = 0f;
 
-                rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+                rotationY += mouseDelta.y * sensitivityY;
 
                 rotArrayY.Add(rotationY);
 
